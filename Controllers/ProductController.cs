@@ -11,47 +11,47 @@ namespace eCommerceApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryModelsController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoryModelsController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/CategoryModels
+        // GET: api/ProductModels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryModel>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
-        // GET: api/CategoryModels/5
+        // GET: api/ProductModels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryModel>> GetCategoryModel(int id)
+        public async Task<ActionResult<ProductModel>> GetProductModel(int id)
         {
-            var categoryModel = await _context.Categories.FindAsync(id);
+            var productModel = await _context.Products.FindAsync(id);
 
-            if (categoryModel == null)
+            if (productModel == null)
             {
                 return NotFound();
             }
 
-            return categoryModel;
+            return productModel;
         }
 
-        // PUT: api/CategoryModels/5
+        // PUT: api/ProductModels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoryModel(int id, CategoryModel categoryModel)
+        public async Task<IActionResult> PutProductModel(int id, ProductModel productModel)
         {
-            if (id != categoryModel.CategoryId)
+            if (id != productModel.ProductId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(categoryModel).State = EntityState.Modified;
+            _context.Entry(productModel).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace eCommerceApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryModelExists(id))
+                if (!ProductModelExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace eCommerceApi.Controllers
             return NoContent();
         }
 
-        // POST: api/CategoryModels
+        // POST: api/ProductModels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CategoryModel>> PostCategoryModel(CategoryModel categoryModel)
+        public async Task<ActionResult<ProductModel>> PostProductModel(ProductModel productModel)
         {
-            _context.Categories.Add(categoryModel);
+            _context.Products.Add(productModel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategoryModel", new { id = categoryModel.CategoryId }, categoryModel);
+            return CreatedAtAction("GetProductModel", new { id = productModel.ProductId }, productModel);
         }
 
-        // DELETE: api/CategoryModels/5
+        // DELETE: api/ProductModels/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategoryModel(int id)
+        public async Task<IActionResult> DeleteProductModel(int id)
         {
-            var categoryModel = await _context.Categories.FindAsync(id);
-            if (categoryModel == null)
+            var productModel = await _context.Products.FindAsync(id);
+            if (productModel == null)
             {
                 return NotFound();
             }
 
-            _context.Categories.Remove(categoryModel);
+            _context.Products.Remove(productModel);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CategoryModelExists(int id)
+        private bool ProductModelExists(int id)
         {
-            return _context.Categories.Any(e => e.CategoryId == id);
+            return _context.Products.Any(e => e.ProductId == id);
         }
     }
 }
