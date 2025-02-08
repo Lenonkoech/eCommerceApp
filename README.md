@@ -100,7 +100,7 @@ Logs in a user by verifying their email and password. Returns a JWT token upon s
 **Request Body:**
 ```json
 {
-  "email": "john.doe@example.com",
+  "email": "user@example.com",
   "password": "Password123"
 }
 ```
@@ -117,6 +117,12 @@ Fetches all products in the database.
 
 **Response:**
 - `200 OK`: Returns a list of products
+
+### Search products by name and description
+
+**GET** `/api/products/search`
+
+Feches all products with the realated search.
 
 ### Get Product by ID
 

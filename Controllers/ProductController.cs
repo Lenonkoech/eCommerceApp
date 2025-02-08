@@ -26,6 +26,26 @@ namespace eCommerceApi.Controllers
         {
             return await _context.Products.ToListAsync();
         }
+        // Search Products by Name or Description
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchProducts([FromQuery] string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return BadRequest("Search query cannot be empty.");
+            }
+
+            var products = await _context.Products
+                .Where(p => p.Name.Contains(query) || p.Description.Contains(query))
+                .ToListAsync();
+
+            if (products.Count == 0)
+            {
+                return NotFound("No products found.");
+            }
+
+            return Ok(products);
+        }
 
         // GET: api/ProductModels/5
         [HttpGet("{id}")]
