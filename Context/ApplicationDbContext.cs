@@ -13,5 +13,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<OrderModel> Orders { get; set; }
     public DbSet<CategoryModel> Categories { get; set; }
 
-public DbSet<eCommerceApi.Models.ShoppingCart> ShoppingCart { get; set; } = default!;
+    public DbSet<eCommerceApi.Models.ShoppingCart> ShoppingCart { get; set; } = default!;
 }
