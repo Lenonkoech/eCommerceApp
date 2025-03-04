@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.dropdown li a:hover {
+  padding-left: 10px;
+  border-left: 2px solid #3ca0e7;
+}

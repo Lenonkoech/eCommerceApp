@@ -1,0 +1,923 @@
+/* Admin Header */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b;
+  color: white;
+  padding: 15px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 60px;
+}
+
+/* Sidebar Toggle Button */
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Centered Logo */
+.admin-logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-logo-container .logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* Admin Name (Right) */
+.admin-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  position: fixed;
+  z-index: 1000;
+  top: 60px;
+  left: -250px;
+  height: calc(100vh - 60px);
+  width: 250px;
+  background: #1e293b;
+  color: white;
+  transition: left 0.3s ease-in-out;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.admin-sidebar.open {
+  left: 0;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  padding: 15px 20px;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 200px;
+  }
+}
+
+/* === General Layout === */
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 80px 20px 20px;
+  /* Adjust for fixed navbar */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* If sidebar is open, push content */
+.admin-dashboard.sidebar-open {
+  margin-left: 250px;
+}
+
+/* === Dashboard Header === */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.dashboard-header h2 {
+  font-size: 24px;
+  color: white;
+}
+
+.notifications {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.notifications svg {
+  font-size: 26px;
+  color: #f1f5f9;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 7px;
+  border-radius: 50%;
+}
+
+/* === Stats Cards === */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.card {
+  background: #334155;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  color: white;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card .icon {
+  font-size: 40px;
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 22px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.card p {
+  font-size: 16px;
+  color: #cbd5e1;
+}
+
+/* === Charts Section === */
+.charts {
+  background: #1e293b;
+  width: 90%;
+  max-width: 900px;
+  padding: 30px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.charts h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #f1f5f9;
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .charts {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .admin-dashboard {
+    padding: 100px 20px 20px;
+  }
+}
+
+/* manage products */
+/* === Page Layout === */
+.manage-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* === Page Header === */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  font-size: 24px;
+  color: #1e293b;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* === Product Table (Centered & At the Top) === */
+.table-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.product-table {
+  width: 90%;
+  max-width: 1200px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-table th, .product-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+  background: #1e293b;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.edit-btn {
+  color: #38bdf8;
+}
+
+.delete-btn {
+  color: red;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  transform: scale(1.1);
+}
+
+/* === Centered Add Product Form Below Table === */
+.form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.product-form {
+  width: 90%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-form h3 {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.product-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.add-btn, .save-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.add-btn:hover, .save-btn:hover {
+  background: #0056b3;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .page-header {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .table-container {
+      width: 100%;
+  }
+
+  .product-table th, .product-table td {
+      padding: 8px;
+      font-size: 14px;
+  }
+
+  .form-container {
+      width: 100%;
+  }
+
+  .product-form {
+      width: 100%;
+  }
+}
+/* === Page Layout === */
+.manage-users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #f4f6f9;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* === Page Header === */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+}
+
+.page-header h2 {
+    font-size: 24px;
+    color: #1e293b;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* === Search Bar === */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.search-container .search-icon {
+    font-size: 20px;
+    color: #555;
+    margin-right: 10px;
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* === User Table === */
+.table-container {
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-table th, .user-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background: #1e293b;
+    color: white;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.edit-btn {
+    color: #38bdf8;
+}
+
+.delete-btn {
+    color: red;
+}
+
+/* === Add/Edit User Form === */
+.form-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.user-form {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-form input, .user-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.add-btn, .save-btn {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}/* === Manage Orders Layout === */
+.manage-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* === Page Header === */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  font-size: 24px;
+  color: #1e293b;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* === Search Bar === */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.search-container .search-icon {
+  font-size: 20px;
+  color: #555;
+  margin-right: 10px;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* === Orders Table === */
+.table-container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table th, .orders-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  background: #1e293b;
+  color: white;
+}
+
+.edit-btn {
+  background: #38bdf8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit-btn:hover {
+  background: #007bff;
+}
+
+/* === Modal === */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.save-btn {
+  background: #38bdf8;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-btn:hover {
+  background: #bbb;
+}
+/* === View Inquiries Layout === */
+.view-inquiries {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* === Page Header === */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  font-size: 24px;
+  color: #1e293b;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* === Search Bar === */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.search-container .search-icon {
+  font-size: 20px;
+  color: #555;
+  margin-right: 10px;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* === Inquiries Table === */
+.table-container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+.inquiries-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inquiries-table th, .inquiries-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.inquiries-table th {
+  background: #1e293b;
+  color: white;
+}
+
+.email-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+
+/* === Reply Button === */
+.reply-btn {
+  background: #38bdf8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.reply-btn:hover {
+  background: #007bff;
+}
+/* === Admin Login Page === */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f6f9;
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h2 {
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* === Password Input with Toggle === */
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+
+.toggle-password:hover {
+  color: #007bff;
+}
+
+/* === Login Button === */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #1e293b;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  background: #334155;
+}
+
+/* === Responsive Design === */
+@media (max-width: 480px) {
+  .login-box {
+      padding: 20px;
+  }
+}
