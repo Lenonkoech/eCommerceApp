@@ -15,7 +15,7 @@ const ManageProducts = () => {
 
     useEffect(() => {
         const fetchAllProducts = async() =>{
-            const res = await fetch
+            
         }
         fetchAllProducts();
     }, []);
