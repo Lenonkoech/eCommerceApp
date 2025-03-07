@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../Assets/css/main.css';
 import { HiOutlineChevronDown, HiMenu, HiX } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
 import { logoutUser } from '../services/authenthication';
 import { BiHeart, BiLogOut, BiShoppingBag } from 'react-icons/bi';
 import { CiShoppingTag } from 'react-icons/ci';
+import { fetchCategories } from '../services/categories';
 
 const HeaderComponent = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -14,24 +14,20 @@ const HeaderComponent = () => {
     const [user, setUser] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const BASE_URL = "http://localhost:5294/api";
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchProductCategories = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/Category`);
-                setCategories(response.data);
+                const data = await fetchCategories();
+                setCategories(data);
             } catch (error) {
                 console.error("Error fetching categories:", error);
                 setError("Failed to load categories. Please try again.");
-            } finally {
-                setLoading(false);
             }
         };
-        fetchCategories();
+        fetchProductCategories();
     }, []);
 
     useEffect(() => {
@@ -69,7 +65,7 @@ const HeaderComponent = () => {
         window.location.href = '/';
     };
 
-    if (loading) return <p className="loading">Loading categories...</p>;
+    // if (loading) return <p className="loading">Loading categories...</p>;
     if (error) return <p className="error">{error}</p>;
 
     return (
@@ -102,8 +98,8 @@ const HeaderComponent = () => {
                             ))}
                         </ul>
                     </li>
-                    <li><a href='#about' onClick={handleNavigationClick}>About</a></li>
-                    <li><a href='#contact' onClick={handleNavigationClick}>Contact</a></li>
+                    <li><Link to={'/about'} onClick={handleNavigationClick}>About</Link></li>
+                    <li><Link to={'/contact'} onClick={handleNavigationClick}>Contact</Link></li>
                     {user ? (
                         <>
                             <li><Link to={'/cart'} onClick={handleNavigationClick}>Cart <BiShoppingBag /></Link></li>

@@ -13,12 +13,22 @@ export const fetchProductById = async (id) => {
     }
 }
 
-export const fetchAllProducts = async () => {
-    try {
-        const response = await axios.get(`${API_URL}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetchng product", error.response?.data || error.message);
-        throw error;
-    }
+export const fetchProducts = async () => {
+    const response = await axios.get(`${API_URL}`);
+    return response.data;
+}
+
+// export const addProduct = async () => {
+//     try {
+//         const response = await axios.post(`${API_URL}`);
+
+//     }
+//     catch (err) {
+
+//     }
+
+// }
+
+export const deleteProduct = async () => {
+
 }

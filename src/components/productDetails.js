@@ -7,6 +7,7 @@ import HeaderComponent from "./header";
 import Footer from "./footer";
 import { jwtDecode } from "jwt-decode";
 import { useNotification } from "../context/NotificationContext";
+import { fetchProductById } from '../services/products';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -15,7 +16,7 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
-    const {showNotification} = useNotification();
+    const { showNotification } = useNotification();
 
     const BASE_URL = "http://localhost:5294/api/Product";
     const IMAGE_URL = "https://localhost:3000/";
@@ -46,8 +47,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/${id}`);
-                const productData = response.data;
+                const productData = await fetchProductById(id);
                 setProduct(productData);
 
                 if (productData.categoryId) {

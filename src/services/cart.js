@@ -2,32 +2,43 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5294/api/ShoppingCart";
 
+
 const api = axios.create({
     baseURL: API_URL,
     headers: { "Content-Type": "application/json" },
     timeout: 10000,
 });
+export const fetchUserCart = async (userId) => {
+    try {
+        const response = await axios.get(`http://localhost:5294/api/ShoppingCart/user/${userId}`);
+        return response.data; // Ensure you return the data, not the full response
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+        throw error; // Rethrow error for better debugging
+    }
+};
+
 
 export const addItemToCart = async ({ productId, userId, quantity }) => {
     try {
-    const payload = {
-        // cartItemId: 0,
-        userId: parseInt(userId, 10), // Convert to integer
-        productId: parseInt(productId, 10), // Convert to integer
-        quantity: parseInt(quantity, 10), // Convert to integer
-        addedAt: new Date().toISOString(), // Ensure valid timestamp
-    };
-    // console.log(payload);
+        const payload = {
+            // cartItemId: 0,
+            userId: parseInt(userId, 10),
+            productId: parseInt(productId, 10),
+            quantity: parseInt(quantity, 10),
+            addedAt: new Date().toISOString(),
+        };
+        // console.log(payload);
 
-    // console.log("Sending request to add item:", payload);
+        // console.log("Sending request to add item:", payload);
 
-    const response = await api.post("/", payload);
+        const response = await api.post("/", payload);
 
-    // console.log("Item added successfully:", response.data);
-    return response.data;
+        // console.log("Item added successfully:", response.data);
+        return response.data;
     } catch (error) {
-    console.error("Error adding item:", error.response?.data || error.message);
-    throw new Error(error.response?.data?.title || "Failed to add item to cart.");
+        console.error("Error adding item:", error.response?.data || error.message);
+        throw new Error(error.response?.data?.title || "Failed to add item to cart.");
     }
 };
 

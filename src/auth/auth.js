@@ -5,7 +5,7 @@ import { FaFacebookF } from 'react-icons/fa6';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNotification } from '../context/NotificationContext';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
-import { Config } from '../../application';
+import { Config } from '../services/application';
 
 const GOOGLE_CLIENT_ID = Config.Authentication.Google.ClientId;
 const FACEBOOK_APP_ID = Config.Authentication.Facebook.AppId;

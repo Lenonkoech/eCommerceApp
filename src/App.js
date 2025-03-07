@@ -14,6 +14,9 @@ import ProtectedAdminRoute from './pages/ProtectedAdminRoute';
 import ProductDetails from './components/productDetails';
 import ProductList from './components/productList';
 import CartPage from './pages/cartPage';
+import ProtectedUserRoute from './pages/protectedUserRoute';
+import AboutPage from './pages/about';
+import ContactPage from './pages/contactUs';
 
 const App = () => {
   const [setNotification] = useState(null);
@@ -32,8 +35,11 @@ const App = () => {
           <Route path="/auth" element={<Login showNotification={showNotification} />} />
           <Route path='/productDetails/:id' element={<ProductDetails showNotification={showNotification} />} />
           <Route path="/products" element={<ProductList showNotification={showNotification} />} />
-          <Route path="/cart" element={<CartPage showNotification={showNotification} />} />
-
+          <Route path='/about' element={<AboutPage />} showNotification={showNotification} />
+          <Route path='/contact' element={<ContactPage showNotification={showNotification} />} />
+          <Route path='/' element={<ProtectedUserRoute />}>
+            <Route path="/cart" element={<CartPage showNotification={showNotification} />} />
+          </Route>
           {/* Admin pages */}
           <Route path='/admin/login' element={<AdminLogin />} />
           <Route path='/admin' element={<ProtectedAdminRoute />} >

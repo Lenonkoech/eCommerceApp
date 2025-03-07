@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
 import "../Assets/css/main.css";
+import "../Assets/css/featured.css";
 import { Link } from "react-router-dom";
+import { fetchProducts } from "../services/products";
 
 const FeaturedProducts = () => {
     const [products, setProducts] = useState([]);
@@ -9,10 +10,10 @@ const FeaturedProducts = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchFeaturedProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:5294/api/Product");
-                setProducts(response.data);
+                const data = await fetchProducts();
+                setProducts(data);
             } catch (error) {
                 console.error("Error fetching products:", error);
                 setError("Failed to load products. Please try again.");
@@ -20,9 +21,9 @@ const FeaturedProducts = () => {
                 setLoading(false);
             }
         };
-
-        fetchProducts();
+        fetchFeaturedProducts();
     }, []);
+
 
     if (loading) return <p className="loading">Loading products...</p>;
     if (error) return <p className="error">{error}</p>;
@@ -31,19 +32,27 @@ const FeaturedProducts = () => {
         <section className="featured">
             <h2>Featured Products</h2>
             <div className="product-grid">
-
                 {products.map((product) => (
                     <div key={product.productId} className="product-card">
                         <h3>
-                            <Link className="link" to={`/productDetails/${product.productId}`}>{product.name}</Link> </h3>
-                        <Link className="link" to={`/productDetails/${product.productId}`}> <img src={`${process.env.PUBLIC_URL}${product.imageUrl}`} alt={product.name} /></Link>
+                            <Link className="link" to={`/productDetails/${product.productId}`}>
+                                {product.name}
+                            </Link>
+                        </h3>
+                        <Link className="link" to={`/productDetails/${product.productId}`}>
+                            <img
+                                src={product.imageUrl.startsWith("http") ? product.imageUrl : `${process.env.PUBLIC_URL}${product.imageUrl}`}
+                                alt={product.name}
+                            />
+                        </Link>
                         <p className="price">Ksh {product.price}</p>
-                        <Link className="link" to={`/productDetails/${product.productId}`}> <button className="btn">Shop Now</button>
+                        <Link className="link" to={`/productDetails/${product.productId}`}>
+                            <button className="btn">Shop Now</button>
                         </Link>
                     </div>
                 ))}
             </div>
-        </section>
+        </section >
     );
 };
 

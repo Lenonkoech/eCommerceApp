@@ -14,7 +14,10 @@ const ManageProducts = () => {
     const [editingProduct, setEditingProduct] = useState(null);
 
     useEffect(() => {
-        // Fetch products from API (future implementation)
+        const fetchAllProducts = async() =>{
+            const res = await fetch
+        }
+        fetchAllProducts();
     }, []);
 
     const handleChange = (e) => {
