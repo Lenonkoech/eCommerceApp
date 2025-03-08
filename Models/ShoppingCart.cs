@@ -1,14 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace eCommerceApi.Models
 {
     public class ShoppingCart
     {
         [Key]
-        public required int CartItemId { get; set; }
-        public required int UserId { get; set; }   //Foreigh key to userModel         
-        public required int ProductId { get; set; }     //Foreigh key to ProductModel    
-        public required int Quantity { get; set; }          
-        public required DateTime AddedAt { get; set; } = DateTime.UtcNow;
+        public int CartItemId { get; set; }
+
+        public int UserId { get; set; }  // FK to User Model
+        [ForeignKey("ProductId")]
+        public int ProductId { get; set; }  // FK to Product Model
+
+        [Required]
+        public int Quantity { get; set; }
+
+        public DateTime AddedAt { get; set; } = DateTime.UtcNow;
+
+        // ✅ Navigation Property
+        [JsonIgnore]
+        public ProductModel? Product { get; set; }
     }
 }

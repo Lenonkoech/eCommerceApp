@@ -1,26 +1,38 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace eCommerceApi.Models
 {
-    public class UserModel
+    public class AdminModel
     {
         [Key]
-        public int UserId { get; set; }
+        public int AdminId { get; set; }
+
         [Required]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         [Required]
         public required string LastName { get; set; }
 
         [Required]
-        public string Email { get; set; }
+        public required string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public required string Email { get; set; }
+
+        [Required]
+        [Phone]
+        public required string Phone { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        //[JsonIgnore]
+        [DefaultValue("Admin")]
+        public string Role { get; set; } = "Admin"; 
+
         [Required]
+      
         public required string Password { get; set; }
 
         [JsonIgnore]

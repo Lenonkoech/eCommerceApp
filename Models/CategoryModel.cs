@@ -9,5 +9,6 @@ namespace eCommerceApi.Models
         public int CategoryId { get; set; } 
         public required string CategoryName { get; set; } 
         public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public ICollection<ProductModel> Products { get; set; }
     }
 }
