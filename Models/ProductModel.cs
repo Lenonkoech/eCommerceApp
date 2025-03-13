@@ -8,16 +8,18 @@ namespace eCommerceApi.Models
     {
         [Key]
         public int ProductId { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required double Price {  get; set; }
-        public required string ImageUrl {  get; set; }
-     //   public string? Discount { get; set; }
-        public  DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public required double Price { get; set; }
+        public string? ImageUrl { get; set; } // Nullable in case no image is provided
+        public double? Discount { get; set; } // Use double? for flexibility
+        public int Stock { get; set; } // Changed from string to int
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey("Category")]
-        public int CategoryId { get; set; } //FK
+        public int CategoryId { get; set; }
+
         [JsonIgnore]
         public CategoryModel? Category { get; set; }
-
     }
 }

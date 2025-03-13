@@ -91,16 +91,16 @@ namespace eCommerceApi.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/User  ❌❌❌ Insecure
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<UserModel>> PostUserModel(UserModel userModel)
-        {
-            _context.Users.Add(userModel);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<UserModel>> PostUserModel(UserModel userModel)
+        //{
+        //    _context.Users.Add(userModel);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserModel", new { id = userModel.UserId }, userModel);
-        }
+        //    return CreatedAtAction("GetUserModel", new { id = userModel.UserId }, userModel);
+        //}
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]

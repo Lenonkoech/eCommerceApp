@@ -58,11 +58,11 @@ namespace eCommerceApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("role")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -165,8 +165,10 @@ namespace eCommerceApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<double?>("Discount")
+                        .HasColumnType("double");
+
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -176,7 +178,12 @@ namespace eCommerceApi.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -202,6 +209,8 @@ namespace eCommerceApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CartItemId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ShoppingCart");
                 });
@@ -242,6 +251,33 @@ namespace eCommerceApi.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("eCommerceApi.Models.ProductModel", b =>
+                {
+                    b.HasOne("eCommerceApi.Models.CategoryModel", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("eCommerceApi.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("eCommerceApi.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("eCommerceApi.Models.CategoryModel", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

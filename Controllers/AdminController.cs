@@ -81,15 +81,15 @@ namespace eCommerceApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Admin
-        [HttpPost]
-        public async Task<ActionResult<AdminModel>> PostAdminModel(AdminModel adminModel)
-        {
-            _context.Admins.Add(adminModel);
-            await _context.SaveChangesAsync();
+        // POST: api/Admin Insecure
+        //[HttpPost]
+        //public async Task<ActionResult<AdminModel>> PostAdminModel(AdminModel adminModel)
+        //{
+        //    _context.Admins.Add(adminModel);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAdminModel), new { id = adminModel.AdminId }, adminModel);
-        }
+        //    return CreatedAtAction(nameof(GetAdminModel), new { id = adminModel.AdminId }, adminModel);
+        //}
 
         // DELETE: api/Admin/5
         [HttpDelete("{id}")]

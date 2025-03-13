@@ -10,23 +10,23 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Load Configuration
+//  Load Configuration
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-// ✅ Retrieve and validate connection string
+// Retrieve and validate connection string
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
 
 try
 {
-    // ✅ Add Database Context with explicit MySQL version
+    //  Adding Database Context with explicit MySQL version
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseMySql(connectionString,
-            new MySqlServerVersion(new Version(8, 0, 21)))); // Match your MySQL version
+            new MySqlServerVersion(new Version(8, 0, 21)))); // MySQL version
 
     //// ✅ Add Identity with custom UserModel
     //builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
@@ -38,12 +38,12 @@ try
     //.AddEntityFrameworkStores<ApplicationDbContext>()
     ////.AddDefaultTokenProviders();
 
-    // ✅ Add logging, controllers, and Swagger
+    //  Add logging, controllers, and Swagger
     builder.Services.AddLogging();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
 
-    // ✅ Configure Swagger with JWT Support
+    //  Configure Swagger with JWT Support
     builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "eCommerce API", Version = "v1" });
@@ -70,7 +70,7 @@ try
         });
     });
 
-    // ✅ Configure CORS
+    //  Configure CORS
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowAll", policy =>
@@ -82,7 +82,7 @@ try
         });
     });
 
-    // ✅ Read JWT settings with detailed validation and logging
+    //  Read JWT settings with detailed validation and logging
     var jwtSettings = builder.Configuration.GetSection("Jwt");
     var key = jwtSettings["Key"] ?? "DefaultInsecureKeyForDevelopmentOnly"; // Fallback with log
     var issuer = jwtSettings["Issuer"];
@@ -99,13 +99,13 @@ try
 
     if (string.IsNullOrEmpty(issuer))
     {
-        logger.LogCritical("JWT Issuer is missing in configuration. Using default value 'http://localhost:5294' for development.");
+        logger.LogCritical("JWT Issuer is missing in configuration. Using default value 'https://localhost:5294' for development.");
         issuer = "http://localhost:5294"; // Fallback
     }
 
     if (string.IsNullOrEmpty(audience))
     {
-        logger.LogCritical("JWT Audience is missing in configuration. Using default value 'http://localhost:3000' for development.");
+        logger.LogCritical("JWT Audience is missing in configuration. Using default value 'https://localhost:3000' for development.");
         audience = "http://localhost:3000"; // Fallback
     }
 
@@ -114,7 +114,7 @@ try
 
     builder.Services.AddHttpClient();
 
-    // ✅ Configure Authentication
+    //  Configure Authentication
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -165,7 +165,7 @@ try
 
     var app = builder.Build();
 
-    // ✅ Middleware Setup
+    // s Middleware Setup
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
@@ -174,8 +174,8 @@ try
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce API v1");
         });
     }
-    
 
+    app.UseStaticFiles(); // serve static files like images
     app.UseHttpsRedirection();
     app.UseCors("AllowAll");
     app.UseAuthentication();

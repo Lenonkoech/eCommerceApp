@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using eCommerceApi.Models;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace eCommerceApi.Controllers
 {
@@ -19,34 +20,74 @@ namespace eCommerceApi.Controllers
             _context = context;
         }
 
-        // ✅ Get All Products
+        // ✅ Get All Products with limit option
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts([FromQuery] int? limit)
         {
-            return await _context.Products.ToListAsync();
-        }
+            IQueryable<ProductModel> query = _context.Products.OrderByDescending(p => p.ProductId);
 
-        // ✅ Search Products by Name or Description (Case-Insensitive)
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchProducts([FromQuery] string query)
-        {
-            if (string.IsNullOrWhiteSpace(query))
+            if (limit.HasValue && limit.Value > 0)
             {
-                return BadRequest(new { message = "Search query cannot be empty." });
+                query = query.Take(limit.Value); // Apply the limit
             }
 
-            var products = await _context.Products
-                .Where(p => EF.Functions.Like(p.Name, $"%{query}%") ||
-                            EF.Functions.Like(p.Description, $"%{query}%"))
-                .ToListAsync();
-
-            if (!products.Any())
-            {
-                return NotFound(new { message = $"No products found matching '{query}'." });
-            }
+            var products = await query.ToListAsync();
 
             return Ok(products);
         }
+
+
+        [HttpGet("category/{categoryId}")]
+        public async Task<ActionResult<object>> GetProductsByCategory(
+            int categoryId,
+            [FromQuery] int page = 1,
+            [FromQuery] int limit = 16,
+            [FromQuery] string? search = "")
+        {
+            if (page < 1 || limit <= 0 || limit > 50)
+            {
+                return BadRequest(new { message = "Invalid pagination parameters." });
+            }
+
+            var query = _context.Products.Where(p => p.CategoryId == categoryId);
+
+            // Apply search filter
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
+            }
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)limit);
+
+            var products = await query
+                .OrderByDescending(p => p.Price)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToListAsync();
+
+            // Return a structured object instead of an array
+            return Ok(new { products, totalPages });
+        }
+
+        [HttpGet("all")]
+        public IActionResult GetAllProducts(int page = 1, int limit = 16, string search = "")
+        {
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
+            }
+
+            var products = query
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+
+            return Ok(new { products = products, total = query.Count() });
+        }
+
 
         // ✅ Get a Single Product by ID
         [HttpGet("{id}")]
@@ -61,17 +102,42 @@ namespace eCommerceApi.Controllers
 
             return product;
         }
-
-        // ✅ Update Product by ID
+        //Update products detailss
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProductModel(int id, ProductModel productModel)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductModel updatedProduct, IFormFile? image)
         {
-            if (id != productModel.ProductId)
+            var existingProduct = await _context.Products.FindAsync(id);
+            if (existingProduct == null)
             {
-                return BadRequest(new { message = "Mismatched product ID." });
+                return NotFound(new { message = "Product not found." });
             }
 
-            _context.Entry(productModel).State = EntityState.Modified;
+            // Update only provided fields
+            if (!string.IsNullOrEmpty(updatedProduct.Name)) existingProduct.Name = updatedProduct.Name;
+            if (updatedProduct.Price != 0) existingProduct.Price = updatedProduct.Price;
+            if (updatedProduct.Stock != 0) existingProduct.Stock = updatedProduct.Stock;
+            if (updatedProduct.CategoryId != 0) existingProduct.CategoryId = updatedProduct.CategoryId;
+            if (!string.IsNullOrEmpty(updatedProduct.Description)) existingProduct.Description = updatedProduct.Description;
+
+            // Handle new image upload if provided
+            if (image != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                existingProduct.ImageUrl = "/images/" + uniqueFileName; // Update image path
+            }
+
+            _context.Entry(existingProduct).State = EntityState.Modified;
 
             try
             {
@@ -79,30 +145,41 @@ namespace eCommerceApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductModelExists(id))
-                {
-                    return NotFound(new { message = "Product no longer exists." });
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, new { message = "Error updating product." });
             }
 
             return NoContent();
         }
 
-        // ✅ Add a New Product
+
+
         [HttpPost]
-        public async Task<ActionResult<ProductModel>> PostProductModel(ProductModel productModel)
+        public async Task<IActionResult> PostProductModel([FromForm] ProductModel productModel, IFormFile image)
         {
+            if (image != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(uploadsFolder); // Ensure the directory exists
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                productModel.ImageUrl = "/images/" + uniqueFileName; 
+            }
+
             _context.Products.Add(productModel);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProductModel), new { id = productModel.ProductId }, productModel);
         }
 
-        // ✅ Delete Product by ID
+
+        // Delete Product by ID (Including Image)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductModel(int id)
         {
@@ -112,33 +189,34 @@ namespace eCommerceApi.Controllers
                 return NotFound(new { message = "Product not found." });
             }
 
+            // Delete the product image if it exists
+            if (!string.IsNullOrEmpty(product.ImageUrl))
+            {
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", product.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // ✅ Get Products by Category with Limit
-        [HttpGet("category/{categoryId}")]
-        public async Task<ActionResult<IEnumerable<ProductModel>>> GetRelatedProducts(int categoryId, [FromQuery] int limit = 8)
+        [HttpGet("offers")]
+        public async Task<ActionResult<IEnumerable<ProductModel>>> GetOfferProducts()
         {
-            if (limit <= 0 || limit > 50)
-            {
-                return BadRequest(new { message = "Limit must be between 1 and 50." });
-            }
-
-            var products = await _context.Products
-                .Where(p => p.CategoryId == categoryId)
-                .OrderByDescending(p => p.Price)  // Example: Sort by price (can be adjusted)
-                .Take(limit)
+            var offerProducts = await _context.Products.
+                Where(p => p.Discount != null)
                 .ToListAsync();
 
-            if (!products.Any())
-            {
-                return NotFound(new { message = "No related products found for this category." });
-            }
-
-            return Ok(products);
+            //if (!offerProducts.Any())
+            //{
+            //    return NotFound(new { message = "No prodcuts on Discount offer found." });
+            //}
+            return Ok(offerProducts);
         }
 
         private bool ProductModelExists(int id)
