@@ -33,7 +33,7 @@ const Testimonials = () => {
             <div className="testimonial-container">
                 {testimonials.map((testimonial) => (
                     <div key={testimonial.id} className="testimonial-card">
-                        <img src={testimonial.image} alt={testimonial.name} className="testimonial-image" />
+                        {/* <img src={testimonial.image} alt={testimonial.name} className="testimonial-image" /> */}
                         <p className="testimonial-message">"{testimonial.message}"</p>
                         <div className="testimonial-rating">
                             {[...Array(testimonial.rating)].map((_, index) => (

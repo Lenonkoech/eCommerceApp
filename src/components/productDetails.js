@@ -8,6 +8,7 @@ import Footer from "./footer";
 import { jwtDecode } from "jwt-decode";
 import { useNotification } from "../context/NotificationContext";
 import { fetchProductById } from '../services/products';
+import { BASE_IMAGE_URL } from "./products";
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -104,7 +105,7 @@ const ProductDetails = () => {
             <div className="product-details">
                 <div className="product-container">
                     <div className="product-image-container">
-                        <img src={`${IMAGE_URL}${product.imageUrl}`} alt={product.name} className="product-image" />
+                        <img src={`${BASE_IMAGE_URL}${product.imageUrl}`} alt={product.name} className="product-image" />
                     </div>
                     <div className="product-info">
                         <h2 className="product-title">{product.name}</h2>
@@ -125,7 +126,7 @@ const ProductDetails = () => {
                         {relatedProducts.length > 0 ? (
                             relatedProducts.map((related) => (
                                 <div key={related.productId} className="related-product">
-                                    <img src={`${IMAGE_URL}${related.imageUrl}`} alt={related.name} />
+                                    <img src={`${BASE_IMAGE_URL}${related.imageUrl}`} alt={related.name} />
                                     <h4>{related.name}</h4>
                                     <p>KES {related.price.toLocaleString()}</p>
                                     <Link to={`/productDetails/${related.productId}`}>

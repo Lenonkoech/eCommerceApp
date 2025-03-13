@@ -21,6 +21,7 @@ api.interceptors.request.use(
 
                 if (decoded.exp < currentTime) {
                     // Token expired, attempt refresh
+                    //🙌🙌👍👍😁😁😁😁 Tough
                     const refreshToken = sessionStorage.getItem("refreshToken");
                     if (refreshToken) {
                         try {
@@ -34,8 +35,8 @@ api.interceptors.request.use(
                             console.warn("Token refresh failed:", refreshError);
                             sessionStorage.removeItem("token");
                             sessionStorage.removeItem("refreshToken");
-                            // Optionally, redirect to login or clear user data
-                            window.location.href = "/login";
+                            // redirect to login or clear user data
+                            window.location.href = "/auth";
                             throw new Error("Token refresh failed. Please login again."); // Or a more user-friendly message.
                         }
                     } else {

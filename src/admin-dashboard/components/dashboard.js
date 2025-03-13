@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HiOutlineShoppingCart, HiOutlineUsers, HiOutlineClipboardList, HiOutlineCurrencyDollar, HiBell } from 'react-icons/hi';
 import Chart from 'react-apexcharts';
-import '../../style.css';
+import "../../Assets/css/style.css";
 
 const AdminDashboard = () => {
     const [orders, setOrders] = useState(120);

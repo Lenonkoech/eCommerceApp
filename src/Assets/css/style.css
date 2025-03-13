@@ -249,7 +249,36 @@
   padding: 20px;
 }
 
+
 /* === Page Header === */
+.featured-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search-bar {
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .featured-header {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .search-bar {
+      width: 100%;
+  }
+}
+
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -293,7 +322,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.product-table th, .product-table td {
+.product-table th,
+.product-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -309,7 +339,8 @@
   gap: 10px;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -324,7 +355,8 @@
   color: red;
 }
 
-.edit-btn:hover, .delete-btn:hover {
+.edit-btn:hover,
+.delete-btn:hover {
   transform: scale(1.1);
 }
 
@@ -361,7 +393,8 @@
   width: 100%;
 }
 
-.add-btn, .save-btn {
+.add-btn,
+.save-btn {
   background: #007bff;
   color: white;
   padding: 10px;
@@ -375,180 +408,245 @@
   gap: 5px;
 }
 
-.add-btn:hover, .save-btn:hover {
+.add-btn:hover,
+.save-btn:hover {
   background: #0056b3;
 }
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  appearance: none;
+  /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+/* Dropdown arrow customization */
+select:focus {
+  border-color:#ddd;
+  outline: none;
+}
+
+/* Container to wrap the select field */
+.select-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Custom arrow */
+.select-container::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+}
+.styled-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  resize: vertical; /* Allows vertical resizing only */
+  min-height: 100px; /* Adjust the height as needed */
+  font-family: inherit; /* Ensures consistency with other inputs */
+}
+
+.styled-textarea:focus {
+  outline: none;
+}
+
+
 
 /* === Responsive Design === */
 @media (max-width: 768px) {
   .page-header {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
   }
 
   .table-container {
-      width: 100%;
+    width: 100%;
   }
 
-  .product-table th, .product-table td {
-      padding: 8px;
-      font-size: 14px;
+  .product-table th,
+  .product-table td {
+    padding: 8px;
+    font-size: 14px;
   }
 
   .form-container {
-      width: 100%;
+    width: 100%;
   }
 
   .product-form {
-      width: 100%;
+    width: 100%;
   }
 }
+
 /* === Page Layout === */
 .manage-users {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background: #f4f6f9;
-    min-height: 100vh;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 /* === Page Header === */
 .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    max-width: 1200px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
 .page-header h2 {
-    font-size: 24px;
-    color: #1e293b;
+  font-size: 24px;
+  color: #1e293b;
 }
 
 .back-link {
-    text-decoration: none;
-    color: #007bff;
-    font-size: 16px;
-    font-weight: bold;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .back-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* === Search Bar === */
 .search-container {
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 10px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .search-container .search-icon {
-    font-size: 20px;
-    color: #555;
-    margin-right: 10px;
+  font-size: 20px;
+  color: #555;
+  margin-right: 10px;
 }
 
 .search-container input {
-    border: none;
-    outline: none;
-    font-size: 16px;
-    width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
 }
 
 /* === User Table === */
 .table-container {
-    width: 90%;
-    max-width: 1200px;
-    margin-bottom: 30px;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: 30px;
 }
 
 .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.user-table th, .user-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.user-table th,
+.user-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .user-table th {
-    background: #1e293b;
-    color: white;
+  background: #1e293b;
+  color: white;
 }
 
 .actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
-.edit-btn, .delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
 }
 
 .edit-btn {
-    color: #38bdf8;
+  color: #38bdf8;
 }
 
 .delete-btn {
-    color: red;
+  color: red;
 }
 
 /* === Add/Edit User Form === */
 .form-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .user-form {
-    width: 90%;
-    max-width: 600px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 90%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.user-form input, .user-form select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 100%;
+.user-form input,
+.user-form select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
 }
 
-.add-btn, .save-btn {
-    background: #007bff;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}/* === Manage Orders Layout === */
+.add-btn,
+.save-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* === Manage Orders Layout === */
 .manage-orders {
   display: flex;
   flex-direction: column;
@@ -625,7 +723,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.orders-table th, .orders-table td {
+.orders-table th,
+.orders-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -706,6 +805,7 @@
 .cancel-btn:hover {
   background: #bbb;
 }
+
 /* === View Inquiries Layout === */
 .view-inquiries {
   display: flex;
@@ -783,7 +883,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.inquiries-table th, .inquiries-table td {
+.inquiries-table th,
+.inquiries-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -820,6 +921,7 @@
 .reply-btn:hover {
   background: #007bff;
 }
+
 /* === Admin Login Page === */
 .admin-login-container {
   display: flex;
@@ -918,6 +1020,6 @@
 /* === Responsive Design === */
 @media (max-width: 480px) {
   .login-box {
-      padding: 20px;
+    padding: 20px;
   }
 }

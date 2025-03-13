@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HiOutlinePencilAlt, HiOutlineTrash, HiPlusCircle, HiSearch } from "react-icons/hi";
-import "../../style.css";
+import "../../Assets/css/style.css";
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([

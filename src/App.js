@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/home';
 import { NotificationProvider } from './context/NotificationContext';
-import AdminHome from './admin-dashboard/src/pages/Adminhome'
-import ManageProducts from './admin-dashboard/src/pages/manageProducts';
-import ManageUsers from './admin-dashboard/src/pages/manageUser';
-import ManageOrders from './admin-dashboard/src/pages/manageOrders';
-import ViewInquiries from './admin-dashboard/src/pages/viewInquiries';
-import AdminLogin from './admin-dashboard/src/AdminLogin';
+import AdminHome from './admin-dashboard/pages/Adminhome'
+import ManageProducts from './admin-dashboard/pages/manageProducts';
+import ManageUsers from './admin-dashboard/pages/manageUser';
+import ManageOrders from './admin-dashboard/pages/manageOrders';
+import ViewInquiries from './admin-dashboard/pages/viewInquiries';
+import AdminLogin from './admin-dashboard/pages/AdminLogin';
 import ProtectedAdminRoute from './pages/ProtectedAdminRoute';
 import ProductDetails from './components/productDetails';
 import ProductList from './components/productList';

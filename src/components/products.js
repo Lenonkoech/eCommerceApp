@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../Assets/css/main.css";
 import "../Assets/css/featured.css";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../services/products";
+
+export const BASE_IMAGE_URL = "http://localhost:5294";
 
 const FeaturedProducts = () => {
     const [products, setProducts] = useState([]);
@@ -12,8 +14,9 @@ const FeaturedProducts = () => {
     useEffect(() => {
         const fetchFeaturedProducts = async () => {
             try {
-                const data = await fetchProducts();
+                const data = await fetchProducts(4);
                 setProducts(data);
+                console.log(products);
             } catch (error) {
                 console.error("Error fetching products:", error);
                 setError("Failed to load products. Please try again.");
@@ -34,14 +37,14 @@ const FeaturedProducts = () => {
             <div className="product-grid">
                 {products.map((product) => (
                     <div key={product.productId} className="product-card">
-                        <h3>
-                            <Link className="link" to={`/productDetails/${product.productId}`}>
+                        <h4>
+                            <Link className="link product-name" to={`/productDetails/${product.productId}`}>
                                 {product.name}
                             </Link>
-                        </h3>
+                        </h4>
                         <Link className="link" to={`/productDetails/${product.productId}`}>
                             <img
-                                src={product.imageUrl.startsWith("http") ? product.imageUrl : `${process.env.PUBLIC_URL}${product.imageUrl}`}
+                                src={product.imageUrl.startsWith("http") ? product.imageUrl : `${BASE_IMAGE_URL}${product.imageUrl}`}
                                 alt={product.name}
                             />
                         </Link>

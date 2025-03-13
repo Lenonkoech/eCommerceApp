@@ -84,7 +84,7 @@ const HeaderComponent = () => {
                         onMouseLeave={() => !window.matchMedia('(max-width: 768px)').matches && setIsProductsOpen(false)}
                         onClick={toggleProductsDropdown}
                     >
-                        Products <HiOutlineChevronDown />
+                        <Link to={'/products'}> Products </Link>
                         <ul className={`dropdown ${isProductsOpen ? 'active' : ''}`}>
                             {categories.map((category) => (
                                 <li key={category.categoryId}>

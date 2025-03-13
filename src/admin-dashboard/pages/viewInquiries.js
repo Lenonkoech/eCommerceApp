@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HiOutlineMail, HiSearch } from "react-icons/hi";
-import "../../style.css";
+import "../../Assets/css/style.css";
 
 const ViewInquiries = () => {
     const [inquiries, setInquiries] = useState([

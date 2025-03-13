@@ -5,6 +5,7 @@ import "../../src/Assets/css/main.css";
 import HeaderComponent from "../components/header";
 import Footer from "../components/footer";
 import { jwtDecode } from "jwt-decode";
+import { BASE_IMAGE_URL } from "../components/products";
 
 const IMAGE_URL = "https://localhost:3000/";
 
@@ -96,7 +97,7 @@ const CartPage = () => {
                         <div className="cart-items">
                             {cartItems.map((item) => (
                                 <div key={item.cartItemId} className="cart-item">
-                                    <img src={`${IMAGE_URL}${item.product?.imageUrl}`} alt={item.product?.name} className="cart-image" />
+                                    <img src={`${BASE_IMAGE_URL}${item.product?.imageUrl}`} alt={item.product?.name} className="cart-image" />
                                     <div className="cart-details">
                                         <p className="cart-item-name">{item.product?.name}</p>
                                         <p className="cart-item-price">KES {item.product?.price?.toLocaleString()}</p>

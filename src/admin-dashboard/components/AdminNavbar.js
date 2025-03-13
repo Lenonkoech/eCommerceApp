@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { HiMenu, HiX, HiOutlineHome, HiOutlineShoppingCart, HiOutlineUsers, HiOutlineClipboardList, HiOutlineChat, HiOutlineLogout } from 'react-icons/hi';
-import '../../style.css';
+import "../../Assets/css/style.css";
 import { jwtDecode } from 'jwt-decode';
 import { logoutAdmin } from '../service/service';
 

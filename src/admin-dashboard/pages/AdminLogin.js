@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
-import "../style.css";
+import "../../Assets/css/style.css";
 import { useNotification } from '../../context/NotificationContext';
-import { loginAdmin } from "./service/service";
+import { loginAdmin } from "../service/service";
 
 
 const AdminLogin = () => {
