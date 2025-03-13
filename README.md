@@ -252,3 +252,150 @@ Creates an order from the items in the user's shopping cart.
 - **MySQL** for storing data
 - **JWT (JSON Web Tokens)** for authentication
 - **Swagger** for API documentation and testing
+## eCommerce API
+
+This is an **eCommerce API** built using **ASP.NET Core** and **Entity Framework Core**. The API supports basic eCommerce functionalities such as **user registration**, **login**, managing **products**, **categories**, **shopping cart**, and **orders**. It also includes password security with hashing and salting techniques.
+
+## Features
+
+- **User Registration & Authentication**: Allows users to register and log in using email, phone, and password. Supports Google and Facebook login.
+- **Admin Management**: Admins can be created, updated, and deleted.
+- **Product & Category Management**: Allows adding, retrieving, updating, and deleting products and categories.
+- **Shopping Cart**: Users can add, update, and remove items from their cart.
+- **Orders**: Users can place orders based on the items in their shopping cart.
+- **Secure Authentication**: Supports JWT authentication.
+
+## Requirements
+
+- **.NET 6.0 SDK** or later
+- **MySQL** or another supported database (like SQL Server or SQLite)
+- **Visual Studio** or another C# IDE (Optional)
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Lenonkoech/eCommerceApi.git
+```
+
+### 2. Open the Project in Visual Studio
+
+Open the project in **Visual Studio** or your preferred editor.
+
+### 3. Install Required Packages
+
+Restore the necessary NuGet packages:
+
+```bash
+dotnet restore
+```
+
+### 4. Configure the Database Connection
+
+In `appsettings.json`, configure your database connection string:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=localhost;database=ecommerceDb;user=root;password=yourpassword"
+  }
+}
+```
+
+### 5. Configure Google and facebook Login
+
+In `appsettings.json`, configure your authenthication
+
+``` json 
+ "Authentication": {
+    "Google": {
+      "ClientId": "YOUR_CLIENT_ID.apps.googleusercontent.com",
+      "ClientSecret": "YOUR_CLIENT_SECRET_KEY"
+    },
+    "Facebook": {
+      "AppId": "YOUR APP ID",
+      "AppSecret": "YOUR SECRET KEY"
+    }
+  }
+  ```
+  Get the above from your google developer console and facebook developer account.
+
+### 6. Add Migrations and Update the Database
+
+Generate and apply the migration to create the database and tables:
+
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+### 6. Run the API
+
+Start the application:
+
+```bash
+dotnet run
+```
+
+## API Endpoints
+
+### Admin
+- **GET** `/api/Admin` - Fetch all admins
+- **GET** `/api/Admin/{id}` - Fetch an admin by ID
+- **PUT** `/api/Admin/{id}` - Update an admin
+- **DELETE** `/api/Admin/{id}` - Delete an admin
+- **POST** `/api/Admin/register` - Register a new admin
+- **POST** `/api/Admin/login` - Login an admin
+
+### User
+- **GET** `/api/User` - Fetch all users
+- **GET** `/api/User/{id}` - Fetch a user by ID
+- **PUT** `/api/User/{id}` - Update a user
+- **DELETE** `/api/User/{id}` - Delete a user
+- **POST** `/api/User/register` - Register a new user
+- **POST** `/api/User/login` - Login a user
+- **POST** `/api/User/google-login` - Google login
+- **POST** `/api/User/facebook-login` - Facebook login
+
+### Category
+- **GET** `/api/Category` - Fetch all categories
+- **POST** `/api/Category` - Add a new category
+- **GET** `/api/Category/{id}` - Fetch a category by ID
+- **PUT** `/api/Category/{id}` - Update a category
+- **DELETE** `/api/Category/{id}` - Delete a category
+
+### Product
+- **GET** `/api/Product` - Fetch all products
+- **POST** `/api/Product` - Add a new product
+- **GET** `/api/Product/category/{categoryId}` - Fetch products by category
+- **GET** `/api/Product/all` - Fetch all products
+- **GET** `/api/Product/{id}` - Fetch a product by ID
+- **PUT** `/api/Product/{id}` - Update a product
+- **DELETE** `/api/Product/{id}` - Delete a product
+- **GET** `/api/Product/offers` - Fetch products on offer
+
+### Shopping Cart
+- **GET** `/api/ShoppingCart` - Fetch all shopping carts
+- **POST** `/api/ShoppingCart` - Add an item to the cart
+- **GET** `/api/ShoppingCart/{id}` - Fetch a shopping cart by ID
+- **DELETE** `/api/ShoppingCart/{id}` - Delete a shopping cart
+- **GET** `/api/ShoppingCart/user/{userId}` - Fetch a user's shopping cart
+- **PATCH** `/api/ShoppingCart/increase/{cartItemId}` - Increase item quantity
+- **PATCH** `/api/ShoppingCart/decrease/{cartItemId}` - Decrease item quantity
+- **DELETE** `/api/ShoppingCart/clear/{userId}` - Clear a user's cart
+
+### Order
+- **GET** `/api/Order` - Fetch all orders
+- **POST** `/api/Order` - Place a new order
+- **GET** `/api/Order/{id}` - Fetch an order by ID
+- **PUT** `/api/Order/{id}` - Update an order
+- **DELETE** `/api/Order/{id}` - Delete an order
+
+## Technology Stack
+
+- **ASP.NET Core** for building the API
+- **Entity Framework Core** for ORM and database interaction
+- **MySQL** for storing data
+- **JWT (JSON Web Tokens)** for authentication
+- **Swagger** for API documentation and testing
