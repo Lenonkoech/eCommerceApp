@@ -7,7 +7,7 @@ const Hero = () => {
                 <div className="hero-content">
                     <h1>New Arrivals - 20% Off!</h1>
                     <p>Discover the latest trends in fashion and accessories.</p>
-                    <a href="/shop" className="btn">Shop Now</a>
+                    <a href="/products" className="btn">Shop Now</a>
                 </div>
             </div>
         </>

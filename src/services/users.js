@@ -16,7 +16,21 @@ export const fetchUser = async (id) => {
 
     }
 }
-
-export const editUserProfile = async (id) =>{
-
+export const fetchUserById = async (id) => {
+    try {
+        const response = await api.get(id);
+        return response.data;
+    } catch (error) {
+        console.error("Cannot fetch userdetails", error.response?.data || error.message);
+        throw error; 
+    }
+}
+export const editUserProfile = async (id, payload) => {
+    try {
+        const response = await api.put(id, payload);
+        return response.data;
+    } catch (error) {
+        console.error("Error upadting userDatils:", error.response?.data || error.message);
+        throw error;
+    }
 }

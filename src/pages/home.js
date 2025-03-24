@@ -8,6 +8,7 @@ import Testimonials from '../components/testimonials';
 import Newsletter from '../components/newsletter';
 import Footer from '../components/footer';
 import Loader from '../components/loader';
+import '../Assets/css/notification.css';
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: 50 },

@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { addQuantity, reduceQuantity, clearCart, removeItemFromCart, fetchUserCart } from "../services/cart";
-import axios from "axios";
-import "../../src/Assets/css/main.css";
+import "../../src/Assets/css/cart.css";
 import HeaderComponent from "../components/header";
+import { Link } from 'react-router-dom';
 import Footer from "../components/footer";
 import { jwtDecode } from "jwt-decode";
+import '../Assets/css/notification.css';
 import { BASE_IMAGE_URL } from "../components/products";
+import { useNotification } from "../context/NotificationContext";
 
-const IMAGE_URL = "https://localhost:3000/";
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
+    const { showNotification } = useNotification();
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
@@ -63,11 +65,14 @@ const CartPage = () => {
 
     const handleDecrease = async (cartItemId, quantity) => {
         if (!user?.userId) return;
+
         if (quantity === 1) {
             await removeItemFromCart(cartItemId);
+            showNotification("Item removed from cart");
         } else {
             await reduceQuantity(cartItemId);
         }
+
         fetchCartItems(user.userId);
     };
 
@@ -116,7 +121,7 @@ const CartPage = () => {
                             <p>Subtotal: <span>KES {subtotal.toFixed(2)}</span></p>
                             <p>Sales Tax: <span>KES {salesTax.toFixed(2)}</span></p>
                             <h3>Grand Total: <span>KES {totalPrice.toFixed(2)}</span></h3>
-                            <button className="checkout-btn">Check Out</button>
+                            <Link to={'/checkout'} ><button className="checkout-btn">Check Out</button></Link>
                         </div>
                     </>
                 )}

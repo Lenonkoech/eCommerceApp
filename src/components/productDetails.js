@@ -3,11 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { addItemToCart } from "../services/cart";
 import "../Assets/css/main.css";
+import "../Assets/css/productDetails.css";
 import HeaderComponent from "./header";
 import Footer from "./footer";
 import { jwtDecode } from "jwt-decode";
 import { useNotification } from "../context/NotificationContext";
-import { fetchProductById } from '../services/products';
+import { fetchProductById } from "../services/products";
+import { addToWishlist } from "../services/wishlistService";
 import { BASE_IMAGE_URL } from "./products";
 
 const ProductDetails = () => {
@@ -20,22 +22,16 @@ const ProductDetails = () => {
     const { showNotification } = useNotification();
 
     const BASE_URL = "http://localhost:5294/api/Product";
-    const IMAGE_URL = "https://localhost:3000/";
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                // console.log("Decoded Token:", decoded);
-
-                // Ensure we extract the correct user ID as an integer
                 const userIdString = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                const userId = parseInt(userIdString, 10); // Convert to integer
+                const userId = parseInt(userIdString, 10);
 
-                if (isNaN(userId)) {
-                    console.error("Invalid user ID format:", userIdString);
-                } else {
+                if (!isNaN(userId)) {
                     setUser({ userId });
                 }
             } catch (error) {
@@ -50,7 +46,6 @@ const ProductDetails = () => {
             try {
                 const productData = await fetchProductById(id);
                 setProduct(productData);
-
                 if (productData.categoryId) {
                     fetchRelatedProducts(productData.categoryId, productData.productId);
                 }
@@ -64,14 +59,15 @@ const ProductDetails = () => {
 
         const fetchRelatedProducts = async (categoryId, productId) => {
             try {
-                const relatedResponse = await axios.get(`${BASE_URL}/category/${categoryId}`);
-                const filteredProducts = relatedResponse.data
-                    .filter(p => p.productId !== productId) // Exclude the current product
-                    .slice(0, 5); // Limit to 5 products
-
+                const response = await axios.get(`${BASE_URL}/category/${categoryId}`);
+                const productsArray = response.data.products || [];
+                const filteredProducts = productsArray
+                    .filter(p => p.productId !== productId)
+                    .slice(0, 4);
                 setRelatedProducts(filteredProducts);
             } catch (error) {
                 console.error("Error fetching related products:", error);
+                setRelatedProducts([]);
             }
         };
 
@@ -80,7 +76,7 @@ const ProductDetails = () => {
 
     const handleAddToCart = async () => {
         if (!product || !user?.userId) {
-            showNotification("Please log in to add items to cart.")
+            showNotification("Please log in to add items to cart.");
             return;
         }
 
@@ -90,11 +86,28 @@ const ProductDetails = () => {
                 userId: user.userId,
                 quantity: 1,
             });
-            showNotification("Item added to cart!")
+            showNotification("Item added to cart!");
         } catch (error) {
-            showNotification(error.message || "Failed to add item to cart.")
+            showNotification(error.message || "Failed to add item to cart.");
         }
     };
+    const handleAddToWishlist = async () => {
+        if (!product || !user?.userId) {
+            showNotification("Please log in to add items to wishlist.");
+            return;
+        }
+
+        try {
+            await addToWishlist({
+                userId: user.userId,
+                productId: product.productId
+            });
+            showNotification("Item added to wishlist!");
+        } catch (error) {
+            showNotification(error.message || "Failed to add item to wishlist.");
+        }
+    };
+
 
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">{error}</div>;
@@ -117,6 +130,7 @@ const ProductDetails = () => {
                             ))}
                         </ul>
                         <button className="add-to-cart" onClick={handleAddToCart}>ADD TO CART</button>
+                        <button className="add-to-wishlist" onClick={handleAddToWishlist}>ADD TO WISHLIST</button>
                     </div>
                 </div>
 
@@ -129,7 +143,7 @@ const ProductDetails = () => {
                                     <img src={`${BASE_IMAGE_URL}${related.imageUrl}`} alt={related.name} />
                                     <h4>{related.name}</h4>
                                     <p>KES {related.price.toLocaleString()}</p>
-                                    <Link to={`/productDetails/${related.productId}`}>
+                                    <Link className="link" to={`/productDetails/${related.productId}`}>
                                         <button className="btn">Shop Now</button>
                                     </Link>
                                 </div>

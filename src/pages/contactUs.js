@@ -2,6 +2,7 @@ import React from "react";
 import "../../src/Assets/css/main.css";
 import HeaderComponent from "../components/header";
 import Footer from "../components/footer";
+import '../Assets/css/notification.css';
 
 const ContactPage = () => {
     return (

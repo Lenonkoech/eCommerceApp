@@ -6,6 +6,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNotification } from '../context/NotificationContext';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { Config } from '../services/application';
+import '../Assets/css/auth.css';
 
 const GOOGLE_CLIENT_ID = Config.Authentication.Google.ClientId;
 const FACEBOOK_APP_ID = Config.Authentication.Facebook.AppId;

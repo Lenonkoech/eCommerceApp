@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import '../Assets/css/header.css';
 import '../Assets/css/main.css';
 import { HiOutlineChevronDown, HiMenu, HiX } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { logoutUser } from '../services/authenthication';
-import { BiHeart, BiLogOut, BiShoppingBag } from 'react-icons/bi';
+import { BiEdit, BiLogOut, BiShoppingBag } from 'react-icons/bi';
 import { CiShoppingTag } from 'react-icons/ci';
 import { fetchCategories } from '../services/categories';
 
@@ -37,6 +38,7 @@ const HeaderComponent = () => {
                 const decoded = jwtDecode(token);
                 const decName = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
                 const decEmail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+                const userid = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
                 setUser({ email: decName || decEmail });
             } catch (error) {
                 console.error('Invalid token:', error);
@@ -70,7 +72,7 @@ const HeaderComponent = () => {
 
     return (
         <header className='header'>
-            <Link className='link' to={'/'}> <h2 className='logo'>URB<span className="highlight">NCove</span></h2></Link>
+            <Link className='link' to={'/'}> <h2 className='logo'>URB<span className="highlight-header">NCove</span></h2></Link>
 
             <div className='mobile-menu-toggle' onClick={toggleMobileMenu}>
                 {isMobileMenuOpen ? <HiX /> : <HiMenu />}
@@ -106,8 +108,8 @@ const HeaderComponent = () => {
                             <li className='dropdown-parent' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                                 {user.email} <HiOutlineChevronDown />
                                 <ul className={`dropdown logout ${isDropdownOpen ? 'active' : ''}`}>
-                                    <li><a href='#i' onClick={handleNavigationClick}>Favorites <BiHeart className='icon' /></a></li>
-                                    <li><a href='#s' onClick={handleNavigationClick}>Wish List <CiShoppingTag /> </a></li>
+                                    <li><Link to={'/editprofile'} onClick={handleNavigationClick}>Edit Profile <BiEdit /> </Link></li>
+                                    <li><Link to={'/wishlist'} onClick={handleNavigationClick}>Wish List <CiShoppingTag /> </Link></li>
                                     <li className='logoutbtn' onClick={handleLogout}>Logout <BiLogOut /></li>
                                 </ul>
                             </li>

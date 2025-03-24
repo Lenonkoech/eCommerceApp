@@ -29,7 +29,7 @@ const ManageProducts = () => {
     const fetchAllProducts = async () => {
         setLoading(true);
         try {
-            const response = await fetchProducts(9);
+            const response = await fetchProducts(10);
             const productsWithCategories = await Promise.all(
                 response.map(async (product) => {
                     try {

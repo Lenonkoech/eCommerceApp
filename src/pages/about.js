@@ -1,7 +1,8 @@
 import React from "react";
 import HeaderComponent from "../components/header";
 import Footer from "../components/footer";
-import "../../src/Assets/css/main.css";
+import "../../src/Assets/css/about.css";
+import '../Assets/css/notification.css';
 
 const AboutPage = () => {
     return (

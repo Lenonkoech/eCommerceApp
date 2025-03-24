@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import "../Assets/css/main.css";
+// import "../Assets/css/main.css";
+import "../Assets/css/productList.css";
 import HeaderComponent from "./header";
 import Footer from "./footer";
 import { Link } from "react-router-dom";
@@ -15,7 +16,7 @@ const ProductList = () => {
     const [searchTerm, setSearchTerm] = useState(""); // Search term state
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const productsPerPage = 16;
+    const productsPerPage = 8;
     const searchTimeout = useRef(null); // Reference for timeout
 
     const BASE_URL = "http://localhost:5294/api/Product";

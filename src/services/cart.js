@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNotification } from "../context/NotificationContext";
 
 const API_URL = "http://localhost:5294/api/ShoppingCart";
 
@@ -30,7 +31,7 @@ export const addItemToCart = async ({ productId, userId, quantity }) => {
         };
         // console.log(payload);
 
-        // console.log("Sending request to add item:", payload);
+        // console.log("Sending request to add item:", payload) ;
 
         const response = await api.post("/", payload);
 
@@ -58,23 +59,22 @@ export const addQuantity = async (cartItemId) => {
 
 //  DECREASE QUANTITY
 
-export const reduceQuantity = async (cartItemId, quantity) => {
+export const reduceQuantity = async (cartItemId, quantity, showNotification) => {
     try {
-        // console.log(`Decreasing quantity for cart item ID: ${cartItemId}`);
-
         if (quantity === 1) {
-            // console.log(`Quantity is 1, removing item ${cartItemId} from cart.`);
-            return await removeItemFromCart(cartItemId);
+            await removeItemFromCart(cartItemId);
+            showNotification("Item removed from cart");
+            return;
         }
 
         const response = await api.patch(`/decrease/${cartItemId}`);
-        // console.log("Quantity decreased:", response.data);
         return response.data;
     } catch (error) {
         console.error("Error decreasing quantity:", error.response?.data || error.message);
         throw error;
     }
 };
+
 
 //  REMOVE ITEM FROM CART
 export const removeItemFromCart = async (cartItemId) => {
