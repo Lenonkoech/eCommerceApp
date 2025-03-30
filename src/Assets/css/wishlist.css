@@ -1,7 +1,7 @@
 /* Wishlist Container */
 .wishlist-container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 100px auto;
     padding: 20px;
     background: #fff;
     border-radius: 10px;
@@ -35,9 +35,12 @@
 
 /* Wishlist Item */
 .wishlist-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.8fr auto;
     align-items: center;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
+    /* justify-content: space-even; */
     background: #f9f9f9;
     padding: 15px;
     border-radius: 10px;
@@ -108,8 +111,9 @@
     }
 
     .wishlist-item {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         padding: 10px;
     }
 

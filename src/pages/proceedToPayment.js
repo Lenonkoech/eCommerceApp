@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import HeaderComponent from "../components/header";
 import Footer from "../components/footer";
 import '../Assets/css/notification.css';
+import '../Assets/css/payment.css';
 
 const ProceedToPayment = () => {
     const navigate = useNavigate();

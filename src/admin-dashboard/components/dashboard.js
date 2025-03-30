@@ -15,12 +15,13 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <div className="dashboard-header">
+            {/* <div className="dashboard-header">
+                <h2>Admin Dashboard</h2>
                 <div className="notifications">
-                    <HiBell />
+                    <HiBell className="notification-icon" />
                     <span className="badge">{newInquiries}</span>
                 </div>
-            </div>
+            </div> */}
             
             <div className="stats-cards">
                 <div className="card">
@@ -44,10 +45,16 @@ const AdminDashboard = () => {
                     <p>New Inquiries</p>
                 </div>
             </div>
+            
             <div className="charts">
-            <h3 className='chartheader'>Sales Chart</h3>
+                <h3 className='chart-header'>Sales Chart</h3>
                 <Chart 
-                    options={{ chart: { id: 'sales-trend' }, xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'] } }}
+                    options={{ 
+                        chart: { id: 'sales-trend', toolbar: { show: false } },
+                        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'] },
+                        dataLabels: { enabled: false },
+                        colors: ['#34a853']
+                    }}
                     series={[{ name: 'Sales', data: [3000, 4000, 3500, 5000, 6000] }]}
                     type="bar"
                     width="100%"

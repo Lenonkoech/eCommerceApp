@@ -699,63 +699,6 @@ h3 {
   background: #1e7e34;
   transform: scale(0.98);
 }
-
-/* Payment */
-.payment-container {
-  margin-top: 100px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: #f4f4f4;
-  border-radius: 10px;
-  width: 50%;
-  margin: 50px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.payment-container input {
-
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.payment-title {
-  margin-top: 7%;
-}
-
-.payment-btn {
-  background: #34a853;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.payment-btn:disabled {
-  background: #bbb;
-  cursor: not-allowed;
-}
-
-.pending-msg {
-  color: #ff9800;
-  font-weight: bold;
-}
-
-.success-msg {
-  color: #4caf50;
-  font-weight: bold;
-}
-
-.error-msg {
-  color: #f44336;
-  font-weight: bold;
-}
-
 /* edit profile */
 .edit-profile-container {
   margin-top: 100px;
