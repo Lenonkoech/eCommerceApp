@@ -118,10 +118,10 @@ const Login = () => {
                             <span>Last Name</span>
                             <input type="text" name="lastName" required value={formData.lastName} onChange={handleChange} />
                         </label>
-                        <label>
+                        {/* <label>
                             <span>Phone</span>
                             <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} />
-                        </label>
+                        </label> */}
                     </>
                 )}
 

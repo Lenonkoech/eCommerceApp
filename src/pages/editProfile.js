@@ -1,144 +1,136 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "../../src/Assets/css/main.css";
 import { jwtDecode } from "jwt-decode";
-import { editUserProfile, fetchUserById } from "../services/users";
-import { useNotification } from "../context/NotificationContext";
-import '../Assets/css/notification.css';
-import HeaderComponent from '../components/header';
-import Footer from '../components/footer';
+import "../../src/Assets/css/main.css";
+import "../../src/Assets/css/contact.css";
+import HeaderComponent from "../components/header";
+import Footer from "../components/footer";
+import "../Assets/css/notification.css";
+import { postMessage } from "../services/contactUsMessageService";
 
-
-const EditProfile = ({ user }) => {
-    const [profile, setProfile] = useState({
-        firstName: "",
-        lastName: "",
+const ContactPage = () => {
+    const [formData, setFormData] = useState({
+        name: "",
         email: "",
-        phone: "254",
-        location: "",
+        message: "",
+        userId: null
     });
-    const [userId, setUserId] = useState(null);
-    const [profileCompletion, setProfileCompletion] = useState(0);
-    const navigate = useNavigate();
-    const { showNotification } = useNotification();
+    const [feedback, setFeedback] = useState({ message: "", type: "" });
+    const [loading, setLoading] = useState(false);
 
-    // Get User ID from Token
+    // Extract User ID from Token
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                const decUserid = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                setUserId(decUserid);
+                const userId = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+                setFormData((prev) => ({ ...prev, userId }));
             } catch (error) {
                 console.error("Invalid token:", error);
-                setUserId(null);
             }
         }
     }, []);
 
-    // Fetch user details when userId is set
-    useEffect(() => {
-        if (userId) {
-            fetchUserDetails(userId);
-        }
-    }, [userId]);
-
-    const fetchUserDetails = async (userId) => {
-        try {
-            const data = await fetchUserById(userId);
-            setProfile(data);
-        } catch (error) {
-            console.error("Error fetching user details:", error);
-        }
-    };
-
-    // Calculate profile completion when profile changes
-    useEffect(() => {
-        calculateCompletion();
-    }, [profile]);
-
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        let updatedValue = value;
-
-        if (name === "phone") {
-            updatedValue = value.replace(/\D/g, "");
-            if (!updatedValue.startsWith("254")) {
-                updatedValue = "254"; // Enforce 254 prefix
-            }
-            if (updatedValue.length > 12) {
-                updatedValue = updatedValue.slice(0, 12);
-            }
-        }
-
-        setProfile((prev) => ({ ...prev, [name]: updatedValue }));
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const calculateCompletion = () => {
-        const fields = ["firstName", "lastName", "email", "phone", "location"];
-        const filledFields = fields.filter((field) => profile[field] && profile[field] !== "");
-        const completion = Math.round((filledFields.length / fields.length) * 100);
-        setProfileCompletion(completion);
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setFeedback({ message: "", type: "" });
+
+        if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+            setFeedback({ message: "⚠️ All fields are required!", type: "error" });
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            setFeedback({ message: "⚠️ Please enter a valid email address!", type: "error" });
+            return;
+        }
+
+        setLoading(true);
 
         try {
-            if (!userId) {
-                showNotification("User ID is missing. Please log in again.");
-                return;
-            }
-
-            await editUserProfile(userId, profile);
-            showNotification("Profile updated successfully");
-            navigate("/editprofile");
+            await postMessage(formData);
+            setFeedback({ message: "✅ Your message has been sent successfully!", type: "success" });
+            setFormData({ name: "", email: "", message: "", userId: formData.userId });
         } catch (error) {
-            console.error("Error updating profile:", error);
-            showNotification("Failed to update profile.");
+            setFeedback({
+                message: error.response?.data?.message || "❌ Failed to send message. Please try again.",
+                type: "error",
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
-    return (<>
-        <HeaderComponent />
-        <div className="edit-profile-container">
-            <h2 className="editprofile-header">Edit Profile</h2>
-            <p>Profile Completion: {profileCompletion}%</p>
-            <progress value={profileCompletion} max="100"></progress>
+    return (
+        <>
+            <HeaderComponent />
+            <section className="contact-container">
+                <div className="contact-content">
+                    <h2 className="contact-title">Get in <span className="highlight">Touch</span></h2>
+                    <p className="contact-text">Have questions? We’d love to hear from you!</p>
 
-            <form onSubmit={handleSubmit} className="profile-form">
-                <div className="form-group">
-                    <label>First Name:</label>
-                    <input type="text" name="firstName" value={profile.firstName} onChange={handleChange} required />
+                    <div className="contact-details">
+                        <p><strong>Email:</strong> <a href="mailto:support@urbncove.com">support@urbncove.com</a></p>
+                        <p><strong>Phone:</strong> <a href="tel:+2544567890">+254 456 7890</a></p>
+                        <p><strong>Location:</strong> Nairobi, Kenya</p>
+                    </div>
+
+                    <form className="contact-form" onSubmit={handleSubmit}>
+                        <label htmlFor="name">Your Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Your Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="email">Your Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Your Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="message">Your Message:</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Your Message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            required
+                        ></textarea>
+
+                        <button type="submit" className="btn-submit" disabled={loading || !formData.name || !formData.email || !formData.message}>
+                            {loading ? "Sending..." : "Send Message"}
+                        </button>
+                    </form>
+
+                    {feedback.message && (
+                        <p className={`feedback-message ${feedback.type === "error" ? "error-text" : "success-text"}`}>
+                            {feedback.message}
+                        </p>
+                    )}
                 </div>
-
-                <div className="form-group">
-                    <label>Last Name:</label>
-                    <input type="text" name="lastName" value={profile.lastName} onChange={handleChange} required />
-                </div>
-
-                <div className="form-group">
-                    <label>Email:</label>
-                    <input type="email" name="email" value={profile.email} onChange={handleChange} required />
-                </div>
-
-                <div className="form-group">
-                    <label>Phone:</label>
-                    <input type="tel" name="phone" value={profile.phone} onChange={handleChange} required maxLength={12} />
-                </div>
-
-                <div className="form-group">
-                    <label>Location:</label>
-                    <input type="text" name="location" value={profile.location} onChange={handleChange} required />
-                </div>
-
-                <button type="submit" className="save-btn">Save Changes</button>
-            </form>
-        </div>
-        <Footer />
-    </>
+            </section>
+            <Footer />
+        </>
     );
 };
 
-export default EditProfile;
+export default ContactPage;

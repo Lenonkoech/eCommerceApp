@@ -41,9 +41,9 @@ const App = () => {
           <Route path='/productDetails/:id' element={<ProductDetails showNotification={showNotification} />} />
           <Route path="/products" element={<ProductList showNotification={showNotification} />} />
           <Route path='/about' element={<AboutPage />} showNotification={showNotification} />
-          <Route path='/contact' element={<ContactPage showNotification={showNotification} />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<ProtectedUserRoute />}>
+            <Route path='/contact' element={<ContactPage showNotification={showNotification} />} />
             <Route path="/cart" element={<CartPage showNotification={showNotification} />} />
             <Route path='/editprofile' element={<EditProfile showNotification={showNotification} />} />
             <Route path="/checkout" element={<CheckoutPage showNotification={showNotification} />} />

@@ -101,9 +101,9 @@ const HeaderComponent = () => {
                         </ul>
                     </li>
                     <li><Link to={'/about'} onClick={handleNavigationClick}>About</Link></li>
-                    <li><Link to={'/contact'} onClick={handleNavigationClick}>Contact</Link></li>
                     {user ? (
                         <>
+                            <li><Link to={'/contact'} onClick={handleNavigationClick}>Contact</Link></li>
                             <li><Link to={'/cart'} onClick={handleNavigationClick}>Cart <BiShoppingBag /></Link></li>
                             <li className='dropdown-parent' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                                 {user.email} <HiOutlineChevronDown />
