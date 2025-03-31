@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using eCommerceApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ try
         options.UseMySql(connectionString,
             new MySqlServerVersion(new Version(8, 0, 21)))); // MySQL version
 
-    //// ✅ Add Identity with custom UserModel
+    ////  Add Identity with custom UserModel
     //builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
     //{
     //    options.SignIn.RequireConfirmedAccount = true;
@@ -42,7 +43,8 @@ try
     builder.Services.AddLogging();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-
+//Register Mpesa service
+    builder.Services.AddScoped<MpesaService>();
     //  Configure Swagger with JWT Support
     builder.Services.AddSwaggerGen(options =>
     {
@@ -161,7 +163,9 @@ try
 
         options.AppId = facebookAppId;
         options.AppSecret = facebookAppSecret;
-    });
+
+    // Add services to the container
+    builder.Services.Configure<MpesaConfig>(builder.Configuration.GetSection("MpesaConfig"));
 
     var app = builder.Build();
 

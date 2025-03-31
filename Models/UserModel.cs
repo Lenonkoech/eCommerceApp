@@ -17,6 +17,9 @@ namespace eCommerceApi.Models
         [Required]
         public string Email { get; set; }
 
+        public string? Phone { get; set; }
+        public string? Location { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         //[JsonIgnore]
