@@ -25,7 +25,7 @@ This is an **eCommerce API** built using **ASP.NET Core** and **Entity Framework
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Lenonkoech/eCommerceApi.git
+git clone https://github.com/Lenonkoech/eCommerceApp.git
 ```
 
 ### 2. Open the Project in Visual Studio

@@ -77,17 +77,16 @@ eCommerceAppFrontend/
 
 ## 🚀 Installation
 
-### 1. Clone the Repositories
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Lenonkoech/eCommerceApi.git
-git clone https://github.com/Lenonkoech/eCommerceAppFrontend.git
+git clone https://github.com/Lenonkoech/eCommerceApp.git
 ```
 
 ### 2. Backend Setup
 
 ```bash
-cd eCommerceApi
+cd backend
 dotnet restore
 # Configure database in appsettings.json
 dotnet ef migrations add InitialCreate
@@ -98,7 +97,7 @@ dotnet run
 ### 3. Frontend Setup
 
 ```bash
-cd ../eCommerceAppFrontend
+cd ../frontend
 npm install
 npm start
 ```
@@ -107,7 +106,7 @@ The frontend will be available at [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🔗 API Endpoints
+## 🔗 Sample API Endpoints
 
 ### Authentication
 
