@@ -1,0 +1,400 @@
+/* Auth styling */
+.cont {
+    position: relative;
+    height: 135dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.form {
+    background: #ffffff;
+    padding: 4rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+    width: 100%;
+    max-width: 500px;
+    transition: transform 1.2s ease-in-out;
+}
+
+.sign-in {
+    z-index: 2;
+    transform: translateX(0);
+}
+
+.sub-cont {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+}
+
+
+.img {
+    position: relative;
+    width: 50%;
+    height: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    transition: transform 1.2s ease-in-out;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.img__text {
+    position: absolute;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.img__text.m--up {
+    opacity: 1;
+}
+
+.img__text.m--in {
+    opacity: 0;
+}
+
+.img__btn {
+    position: absolute;
+    cursor: pointer;
+    background: #fff;
+    color: #764ba2;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease-in-out, background 0.2s;
+    top: 70%;
+}
+
+.img__btn:hover {
+    transform: translateY(-3px);
+    background: #f8f9fa;
+}
+
+.sign-up {
+    position: relative;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+    transform: translateX(100%);
+    transition: all 1.2s ease-in-out;
+}
+
+.cont.s--signup .sign-in {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.cont.s--signup .sign-up {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 3;
+}
+
+.cont.s--signup .img {
+    transform: translateX(100%);
+}
+
+.cont.s--signup .img__text.m--up {
+    opacity: 0;
+}
+
+.cont.s--signup .img__text.m--in {
+    opacity: 1;
+}
+
+h2 {
+    margin-bottom: 2rem;
+    color: #2d3748;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+/* Styles for "Already have an account?" and "Don't have an account?" text */
+.already-account {
+    text-align: center;
+    /* Center the text */
+    margin-bottom: 1rem;
+    /* Add some space below */
+}
+
+.already-account span {
+    color: #667eea;
+    /* Or your preferred link color */
+    cursor: pointer;
+    text-decoration: none;
+    /* Remove underline if desired */
+}
+
+
+label {
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+span {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Password Input Wrapper */
+.password-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.password-input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Eye Icon Button */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+}
+
+.toggle-password:hover {
+    color: #000;
+}
+
+.submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(118, 75, 162, 0.2);
+}
+
+.forgot-pass {
+    text-align: center;
+    margin: 1rem 0 2rem;
+    color: #667eea;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.socials {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    grid-template-columns: auto;
+    margin-top: 2rem;
+}
+
+/* Facebook Login Button */
+.fb-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1877f2;
+    /* Facebook Blue */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+}
+
+.fb-login-btn:hover {
+    background-color: #145dbf;
+    /* Darker Facebook Blue */
+}
+
+.fb-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.google-login-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    /* White background like requested */
+    border: none;
+    /* Remove border */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for depth */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    max-width: 250px;
+    /* Dark grey text for contrast */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.google-login-btn:hover {
+    background-color: #f0f0f0;
+    /* Light grey hover effect */
+}
+
+.google-login-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    /* Space between icon and text */
+}
+
+@media (min-width: 640px) {
+    .socials {
+        display: flex;
+
+    }
+
+    /* Tablets */
+    .google-login-btn button {
+        width: 75%;
+        font-size: 18px;
+        height: 55px;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* Desktops */
+    .google-login-btn button {
+        width: 50%;
+        font-size: 20px;
+        height: 60px;
+    }
+}
+
+/* 
+  .google-login-btn:hover {
+    background-color: #f7f7f7;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  } */
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+
+
+@media (max-width: 768px) {
+    .cont {
+        padding: 1rem;
+    }
+
+    .img {
+        display: none;
+    }
+
+    .sign-in,
+    .sign-up {
+        width: 100%;
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    .cont.s--signup .sign-in {
+        display: none;
+    }
+
+    .cont.s--signup .sign-up {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .form {
+        padding: 2rem 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+}
+
+.switch-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #4a5568;
+    font-size: 0.875rem;
+}
+
+.switch-link {
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.switch-link:hover {
+    color: #764ba2;
+}
+
+/* Add this to ensure the switch text is at the top in the sign-up form */
+.sign-up .switch-text {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
